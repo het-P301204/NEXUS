@@ -1,0 +1,56 @@
+{
+  "note": "Fictional sample data for the NEXUS demo. These CVE identifiers do not exist and describe no real vulnerability.",
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2026-997011",
+      "title": "sqlite FTS5 snippet() heap over-read (fictional)",
+      "cwe": "CWE-125",
+      "cvssScore": 6.5,
+      "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+      "severity": "MEDIUM",
+      "description": "Fictional sample record. A crafted full-text query makes snippet() read past the end of a token buffer.",
+      "component": "sqlite",
+      "affectedVersions": ">=3.40.0 <3.46.1",
+      "fixedVersion": "3.46.1",
+      "exploitability": "Requires the ability to submit full-text search queries",
+      "exploitation": "NOT_OBSERVED",
+      "source": "Fictional sample import",
+      "discoveredAt": "2026-09-28T08:30:00Z",
+      "vendorAdvisory": "https://advisories.example/fictional-997011"
+    },
+    {
+      "cve": "CVE-2026-997012",
+      "title": "jackson-databind polymorphic typing gadget bypass (fictional)",
+      "cwe": "CWE-502",
+      "cvssScore": 8.1,
+      "cvssVector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "severity": "HIGH",
+      "description": "Fictional sample record. A gadget class missing from the deny list is instantiated when polymorphic typing is enabled.",
+      "component": "pkg:maven/com.fasterxml.jackson.core/jackson-databind",
+      "affectedVersions": "<2.15.5",
+      "fixedVersion": "2.15.5",
+      "exploitability": "Network, only where polymorphic typing is enabled for untrusted input",
+      "exploitation": "UNKNOWN",
+      "source": "Fictional sample import",
+      "discoveredAt": "2026-09-28T14:10:00Z",
+      "vendorAdvisory": "https://advisories.example/fictional-997012"
+    },
+    {
+      "cve": "CVE-2026-997013",
+      "title": "nginx HTTP/2 HPACK dynamic table exhaustion (fictional)",
+      "cwe": "CWE-400",
+      "cvssScore": 7.5,
+      "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+      "severity": "HIGH",
+      "description": "Fictional sample record. Repeated header table size updates exhaust worker memory on HTTP/2 connections.",
+      "component": "nginx",
+      "affectedVersions": ">=1.21.0 <1.27.2",
+      "fixedVersion": "1.27.2",
+      "exploitability": "Network, unauthenticated, HTTP/2 enabled",
+      "exploitation": "SUSPECTED",
+      "source": "Fictional sample import",
+      "discoveredAt": "2026-09-29T06:45:00Z",
+      "vendorAdvisory": "https://advisories.example/fictional-997013"
+    }
+  ]
+}

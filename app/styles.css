@@ -1,0 +1,194 @@
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Keyframes live here, outside any @layer, because the component classes
+ * below reference them by name. Tailwind only emits keyframes for animate-*
+ * utilities it finds in markup; a hand-written class that names an animation
+ * Tailwind never emitted would silently do nothing.
+ */
+@keyframes th-pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  70% { transform: scale(2.4); opacity: 0; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes th-flow {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes th-particle {
+  0% { offset-distance: 0%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+@keyframes th-scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+@keyframes th-shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+@keyframes th-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-canvas font-sans text-base text-ink;
+    font-feature-settings: 'ss01', 'cv11';
+    /* User-supplied identifiers are long and unbreakable; let them wrap. */
+    overflow-wrap: break-word;
+  }
+  ::selection {
+    background: rgba(231, 162, 74, 0.28);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid rgba(231, 162, 74, 0.8);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  button, [role='button'] {
+    -webkit-tap-highlight-color: transparent;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(236, 231, 221, 0.14) transparent;
+  }
+  input, textarea, select {
+    font: inherit;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply min-w-0 rounded-xl border border-line bg-s1 shadow-panel;
+  }
+  .panel-raised {
+    @apply min-w-0 rounded-xl border border-line-strong bg-s2 shadow-raise;
+  }
+  .micro {
+    @apply font-mono text-micro uppercase text-ink-3;
+  }
+  .mono {
+    @apply font-mono;
+    font-variant-numeric: tabular-nums;
+  }
+  .ident {
+    @apply font-mono;
+    overflow-wrap: anywhere;
+  }
+  .hairline {
+    @apply border-t border-line;
+  }
+  .field {
+    @apply w-full min-w-0 rounded-md border border-line-strong bg-s2 px-3 py-2 text-sm text-ink placeholder:text-ink-4 transition-colors duration-150;
+  }
+  .field:hover {
+    @apply border-line-bright;
+  }
+  .field:focus {
+    @apply border-amber-line outline-none;
+    box-shadow: 0 0 0 3px rgba(231, 162, 74, 0.12);
+  }
+  .field[aria-invalid='true'] {
+    @apply border-red-line;
+  }
+  .skeleton {
+    background: linear-gradient(90deg, rgba(236, 231, 221, 0.04) 0px, rgba(236, 231, 221, 0.09) 80px, rgba(236, 231, 221, 0.04) 160px);
+    background-size: 800px 100%;
+    animation: th-shimmer 1.4s linear infinite;
+    @apply rounded-md;
+  }
+  .pulse-ring::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: currentColor;
+    animation: th-pulse 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+  .flow-line {
+    stroke-dasharray: 3 9;
+    animation: th-flow 1.1s linear infinite;
+  }
+  .particle {
+    offset-rotate: 0deg;
+    animation: th-particle 3.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+  .blink {
+    animation: th-blink 1.6s ease-in-out infinite;
+  }
+  .scanline {
+    animation: th-scan 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(236, 231, 221, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(236, 231, 221, 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .row-line {
+    @apply border-b border-line transition-colors duration-150;
+  }
+  .row-line:hover {
+    @apply bg-s2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-ring::before,
+  .flow-line,
+  .particle,
+  .scanline,
+  .blink,
+  .skeleton {
+    animation: none !important;
+  }
+  .particle {
+    display: none;
+  }
+}
+[data-reduce-motion='true'] .pulse-ring::before,
+[data-reduce-motion='true'] .flow-line,
+[data-reduce-motion='true'] .particle,
+[data-reduce-motion='true'] .scanline,
+[data-reduce-motion='true'] .blink {
+  animation: none !important;
+}
+[data-reduce-motion='true'] .particle {
+  display: none;
+}
+
+@media print {
+  body {
+    background: #fff !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-sheet {
+    box-shadow: none !important;
+    border: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+}
