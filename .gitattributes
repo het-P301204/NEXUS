@@ -1,0 +1,13 @@
+# Normalise line endings so a checkout on Windows and one on Linux hash the
+# same bytes. The evidence and ledger hashes are computed over content, so a
+# CRLF conversion would otherwise change a sample file's SHA-256.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.sqlite binary
+
+docs/screenshots/*.png linguist-generated=true

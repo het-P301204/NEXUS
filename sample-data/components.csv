@@ -1,0 +1,4 @@
+product_id,name,purl,ecosystem,supplier,version,relation,usage
+PRD-SEG3,openssl,pkg:generic/openssl,C / system,OpenSSL Project,1.1.1k,direct,"Fictional sample mapping. TLS for the legacy management interface."
+PRD-SEG3,busybox,pkg:generic/busybox,C / embedded,BusyBox,1.31.1,direct,"Fictional sample mapping. Base userland, including the udhcpc DHCP client on the WAN interface."
+PRD-SEG3,lighttpd,pkg:generic/lighttpd,C / system,lighttpd project,1.4.59,direct,"Fictional sample mapping. Web server for the legacy local console. Not yet in the component register, so the preview notes it will be added."

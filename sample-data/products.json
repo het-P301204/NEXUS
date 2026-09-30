@@ -1,0 +1,31 @@
+{
+  "note": "Fictional sample data for the NEXUS demo. These products, and the manufacturer they belong to, do not exist.",
+  "products": [
+    {
+      "id": "PRD-EDG",
+      "name": "EdgeSense Sensor Hub",
+      "version": "1.2.0",
+      "lifecycle": "active",
+      "ownerId": "u-eng",
+      "description": "Fictional sample product. Sensor hub that aggregates OT field sensors and forwards readings to SecureEdge gateways over the sensor LAN.",
+      "sbomStatus": "current",
+      "sbomGeneratedAt": "2026-09-22T10:00:00Z",
+      "environment": "Field sensor hub (ARM Cortex-A7, embedded Linux)",
+      "exposure": "isolated",
+      "madeAvailableInEu": true
+    },
+    {
+      "id": "PRD-FLK",
+      "name": "FieldLink Cellular Modem",
+      "version": "5.0.3",
+      "lifecycle": "active",
+      "ownerId": "u-lead",
+      "description": "Fictional sample product. LTE-M modem that gives remote plant sites a backhaul link to BridgeCloud Console.",
+      "sbomStatus": "current",
+      "sbomGeneratedAt": "2026-09-18T15:30:00Z",
+      "environment": "Cellular modem (MIPS, embedded Linux)",
+      "exposure": "internet_facing",
+      "madeAvailableInEu": true
+    }
+  ]
+}

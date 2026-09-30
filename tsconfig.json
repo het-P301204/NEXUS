@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "noEmit": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // The API server runs the shared engine's `.ts` sources directly through
+    // Node's native type stripping -- no build step for the backend. Three
+    // rules follow for everything reachable from `server/`: import specifiers
+    // carry their real `.ts` extension, type-only imports are marked
+    // `import type`, and no construct that needs a runtime emit appears in
+    // the graph -- no `enum`, no `namespace`, no constructor parameter
+    // properties.
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "types": ["vite/client", "node"]
+  },
+  "include": [
+    "app",
+    "components",
+    "lib",
+    "types",
+    "data",
+    "rules",
+    "server",
+    "tests",
+    "scripts",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ]
+}

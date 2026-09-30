@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.playwright-mcp/
+*.local
+.env
+.DS_Store
+
+# Runtime state: the SQLite database and uploaded evidence files. Neither is
+# ever committed -- the demo database is re-seeded on first start.
+storage/
