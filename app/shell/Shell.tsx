@@ -12,6 +12,8 @@ import { CommandPalette } from './CommandPalette.tsx'
 import { Boot } from './Boot.tsx'
 import { SystemStatusDrawer } from './SystemStatusDrawer.tsx'
 import { Wordmark } from './Wordmark.tsx'
+import { StaticDemoBanner } from './StaticDemoBanner.tsx'
+import { STATIC_DEMO } from '../../lib/client/mode.ts'
 
 export const DISCLAIMER =
   'NEXUS provides technical and operational decision support. It does not constitute legal advice or a legal determination of regulatory compliance.'
@@ -88,6 +90,7 @@ export function Shell() {
       </a>
       <Sidebar onOpenStatus={() => setStatusOpen(true)} />
       <div className="flex min-w-0 flex-1 flex-col">
+        {STATIC_DEMO && <StaticDemoBanner />}
         <TopBar onOpenPalette={() => setPalette(true)} onOpenMenu={() => setMenu(true)} onOpenStatus={() => setStatusOpen(true)} />
         <main id="main" className="min-w-0 flex-1 px-4 pb-24 pt-6 sm:px-6 sm:pt-8 lg:px-10 lg:pb-12 xl:px-12">
           <div className="mx-auto w-full min-w-0 max-w-page">

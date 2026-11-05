@@ -1,4 +1,6 @@
 import type { ErrorBody } from '../../server/errors.ts'
+import { STATIC_DEMO } from './mode.ts'
+import { demoFetch } from './static-demo.ts'
 
 /**
  * The browser's only door to the server. Adds the session's CSRF token to
@@ -8,6 +10,14 @@ import type { ErrorBody } from '../../server/errors.ts'
  */
 
 let csrfToken: string | null = null
+
+/**
+ * Every request to /api goes through here. In the static demo build there is
+ * no server, and the recorded snapshot answers instead (static-demo.ts).
+ */
+export function apiFetch(input: string, init?: RequestInit): Promise<Response> {
+  return STATIC_DEMO ? demoFetch(input, init) : fetch(input, init)
+}
 
 export function setCsrfToken(token: string | null): void {
   csrfToken = token
@@ -49,7 +59,7 @@ export async function api<T>(path: string, opts: RequestOptions = {}): Promise<T
   }
   let res: Response
   try {
-    res = await fetch(path, { method, headers, body, credentials: 'same-origin', signal: opts.signal })
+    res = await apiFetch(path, { method, headers, body, credentials: 'same-origin', signal: opts.signal })
   } catch (err) {
     if (err instanceof DOMException && err.name === 'AbortError') throw err
     throw new ApiFailure(0, {
@@ -81,7 +91,7 @@ export async function api<T>(path: string, opts: RequestOptions = {}): Promise<T
 
 /** Trigger a download from an authorised GET endpoint without exposing a public URL. */
 export async function download(path: string, fallbackName: string): Promise<void> {
-  const res = await fetch(path, { credentials: 'same-origin' })
+  const res = await apiFetch(path, { credentials: 'same-origin' })
   if (!res.ok) {
     let body: ErrorBody = { code: `HTTP_${res.status}`, title: 'Download refused', reason: `The server answered ${res.status}.` }
     try {

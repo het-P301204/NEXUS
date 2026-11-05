@@ -1,6 +1,7 @@
 import { Link, useMatches, useNavigate } from 'react-router'
 import { Bell, Building2, Check, ChevronRight, LogOut, Menu, Search, UserRound } from 'lucide-react'
 import { useSession } from '../../lib/client/session.tsx'
+import { REPO_URL, STATIC_DEMO } from '../../lib/client/mode.ts'
 import { useNotifications, usePersonas, useSystemStatus } from '../../lib/client/queries.ts'
 import { ROLES } from '../../lib/rbac.ts'
 import { Popover } from '../../components/ui/popover.tsx'
@@ -143,7 +144,16 @@ export function TopBar({ onOpenPalette, onOpenMenu, onOpenStatus }: { onOpenPale
                 </div>
                 <div className="ident mt-1 text-[11px] text-ink-4">{session?.user.email}</div>
               </div>
-              {demoMode && personas.data && (
+              {STATIC_DEMO && (
+                <p className="px-4 py-3 text-[11.5px] leading-relaxed text-ink-3">
+                  Static demo: you are viewing the seeded organisation as its PSIRT Lead. Switching persona and signing out need the{' '}
+                  <a href={REPO_URL} target="_blank" rel="noreferrer" className="text-ink-2 underline underline-offset-2 hover:text-ink">
+                    local server
+                  </a>
+                  .
+                </p>
+              )}
+              {!STATIC_DEMO && demoMode && personas.data && (
                 <div className="max-h-72 overflow-y-auto p-2">
                   <div className="micro px-2 pb-1.5 pt-1">Demo: switch persona</div>
                   {personas.data.personas.map((p) => (
@@ -167,19 +177,21 @@ export function TopBar({ onOpenPalette, onOpenMenu, onOpenStatus }: { onOpenPale
                   ))}
                 </div>
               )}
-              <div className="border-t border-line p-2">
-                <button
-                  type="button"
-                  onClick={async () => {
-                    close()
-                    await signOut()
-                    navigate('/signin')
-                  }}
-                  className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-xs text-ink-2 transition-colors hover:bg-s3 hover:text-ink"
-                >
-                  <LogOut className="h-3.5 w-3.5" /> Sign out
-                </button>
-              </div>
+              {!STATIC_DEMO && (
+                <div className="border-t border-line p-2">
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      close()
+                      await signOut()
+                      navigate('/signin')
+                    }}
+                    className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-xs text-ink-2 transition-colors hover:bg-s3 hover:text-ink"
+                  >
+                    <LogOut className="h-3.5 w-3.5" /> Sign out
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </Popover>

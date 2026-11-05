@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react'
+import { STATIC_DEMO } from './mode.ts'
 
 /**
  * One shared ticker for every countdown on screen. Components subscribe to
@@ -10,6 +11,7 @@ import { useSyncExternalStore } from 'react'
 
 let offsetMs = 0
 let current = Date.now()
+let anchored = false
 const subs = new Set<() => void>()
 let timer: ReturnType<typeof setInterval> | null = null
 
@@ -31,10 +33,15 @@ function subscribe(fn: () => void) {
 }
 
 export function syncServerTime(serverIso: string): void {
+  // The static demo's data was captured at one instant, and every response
+  // carries that same "now". Its clock is anchored there once and then runs,
+  // instead of jumping back to the capture instant on every refetch.
+  if (STATIC_DEMO && anchored) return
   const server = Date.parse(serverIso)
   if (Number.isNaN(server)) return
   offsetMs = server - Date.now()
   current = Date.now() + offsetMs
+  anchored = true
 }
 
 export function nowMs(): number {

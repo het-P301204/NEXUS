@@ -30,6 +30,9 @@ function page(load: () => Promise<Record<string, unknown>>, name: string) {
   )
 }
 
+// "/" in a normal build; "/NEXUS" on GitHub Pages (vite.config.ts, mode "pages").
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+
 const router = createBrowserRouter([
   { path: '/signin', element: page(() => import('./routes/SignIn.tsx'), 'SignIn') },
   {
@@ -59,7 +62,7 @@ const router = createBrowserRouter([
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },
-])
+], { basename })
 
 function Root() {
   const prefs = usePreferences()

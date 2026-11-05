@@ -188,7 +188,7 @@ export function ImportExport() {
     if (!name) return
     setSampleBusy(f)
     try {
-      const res = await fetch(`/samples/${name}`, { credentials: 'same-origin' })
+      const res = await fetch(`${import.meta.env.BASE_URL}samples/${name}`, { credentials: 'same-origin' })
       if (!res.ok) throw new Error(String(res.status))
       const text = await res.text()
       setFormat(f)

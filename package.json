@@ -13,6 +13,8 @@
     "dev:api": "node --watch-path=server --watch-path=lib --watch-path=rules --watch-path=types --watch-path=data server/index.ts",
     "dev:web": "vite",
     "build": "tsc --noEmit && vite build",
+    "build:pages": "tsc --noEmit && vite build --mode pages && node scripts/demo-snapshot.ts --out dist",
+    "preview:pages": "vite preview --mode pages",
     "start": "node server/index.ts --production",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",

@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router'
 import { motion } from 'motion/react'
 import { ArrowRight, CheckCircle2, Download, Laptop, Lock, RefreshCw, XCircle } from 'lucide-react'
 import type { EvidenceChainNode } from '../../types/api.ts'
-import { api, download } from '../../lib/client/api.ts'
+import { api, apiFetch, download } from '../../lib/client/api.ts'
 import { useAction, useEvidenceItem, useUsers } from '../../lib/client/queries.ts'
 import { bytes, stamp } from '../../lib/client/format.ts'
 import { Button, Ident, KeyValue, SkeletonPage, cx } from '../../components/ui/primitives.tsx'
@@ -43,7 +43,7 @@ export function EvidenceDetail() {
     setChecking(true)
     setVerifyError(null)
     try {
-      const res = await fetch(`/api/evidence/${id}/file`, { credentials: 'same-origin' })
+      const res = await apiFetch(`/api/evidence/${id}/file`, { credentials: 'same-origin' })
       if (!res.ok) throw new Error(`Download refused (${res.status})`)
       const digest = await crypto.subtle.digest('SHA-256', await res.arrayBuffer())
       const hash = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('')

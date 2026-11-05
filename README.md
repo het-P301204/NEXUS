@@ -18,6 +18,7 @@
 </p>
 
 <p align="center">
+  <a href="https://het-p301204.github.io/NEXUS/"><b>Live demo</b></a> ·
   <a href="#the-problem">The problem</a> ·
   <a href="#the-clock-of-record">Clock of Record</a> ·
   <a href="#how-a-determination-is-made">Determination</a> ·
@@ -46,6 +47,12 @@ quietly rewritten:
   editing history.
 - **A ledger that checks itself.** Every change lands in an append-only, SHA-256 hash-chained audit
   ledger. Your browser can verify it independently of the server.
+
+**Try it:** a read-only static build runs on GitHub Pages with the synthetic demo organisation:
+[het-p301204.github.io/NEXUS](https://het-p301204.github.io/NEXUS/). It is recorded from a freshly
+seeded server on every deploy, so its clocks start at the moment of the build; ledger verification,
+the tamper simulation and evidence re-hashing run in your browser. Recording events, decisions and
+reports needs the server: [run it locally](#run-it) in three commands.
 
 > [!IMPORTANT]
 > NEXUS provides technical and operational decision support. It does not constitute legal advice
@@ -357,6 +364,10 @@ the unassigned range `CVE-2026-99xxxx`. Ten seeded cases cover every state:
 
 - **Personas.** Sign in as any of the ten. Jonas Weber (PSIRT Lead) sees the full workflow; Ines
   Kovač (Read Only) sees every write refused by the server.
+- **Static demo.** The [hosted demo](https://het-p301204.github.io/NEXUS/) is Jonas Weber's view,
+  recorded by `npm run build:pages` (see [`scripts/demo-snapshot.ts`](scripts/demo-snapshot.ts)).
+  Every page, detail view and download is there; switching persona, the scenario simulator and
+  every write need the local server, and say so.
 - **Scenario simulator** (Settings → Demo mode). Six scenarios create fresh cases on demand: active
   exploitation, not affected, uncertain affectedness, 24h pressure, a non-report decision, and
   ledger tampering.
@@ -405,6 +416,7 @@ anywhere real data is stored.
 | `npm run dev` | API on :8787 (watch mode) and the Vite app on :5173 |
 | `npm test` | the full vitest suite |
 | `npm run verify` | lint, typecheck, tests and the production build |
+| `npm run build:pages` | the static, read-only demo for GitHub Pages: the app under `/NEXUS/` plus a recorded snapshot |
 | `npm run db:reset` | re-seed the demo database |
 | `npm run tamper-demo` | tamper with the real database file and watch verification catch it |
 
@@ -450,7 +462,7 @@ NEXUS/
 ├── types/            domain and API types
 ├── tests/            vitest: engine, text, API integration, security review
 ├── sample-data/      import samples (CSV, JSON)
-├── scripts/          dev runner, db reset, tamper demo
+├── scripts/          dev runner, db reset, tamper demo, Pages demo snapshot
 └── docs/             architecture, threat model, data model, rule engine, screenshots
 ```
 

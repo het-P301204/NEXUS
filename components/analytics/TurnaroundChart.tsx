@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { Link, useHref, useNavigate } from 'react-router'
 import { motion, useReducedMotion } from 'motion/react'
 import { ArrowUpRight } from 'lucide-react'
 import type { Analytics } from '../../lib/engine/analytics.ts'
@@ -35,6 +35,7 @@ export function TurnaroundChart({ points }: { points: Point[] }) {
   const [ref, width] = useWidth<HTMLDivElement>()
   const reduce = useReducedMotion()
   const navigate = useNavigate()
+  const root = useHref('/').replace(/\/$/, '')
   const [hover, setHover] = useState<number | null>(null)
 
   const iw = Math.max(0, width - M.left - M.right)
@@ -114,7 +115,7 @@ export function TurnaroundChart({ points }: { points: Point[] }) {
             return (
               <a
                 key={p.caseId}
-                href={`/cases/${encodeURIComponent(p.caseId)}`}
+                href={`${root}/cases/${encodeURIComponent(p.caseId)}`}
                 aria-label={label}
                 onClick={(e) => {
                   e.preventDefault()

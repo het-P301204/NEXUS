@@ -9,6 +9,7 @@ import { api, ApiFailure, download } from '../../lib/client/api.ts'
 import { useAction, useLedger, useUsers } from '../../lib/client/queries.ts'
 import { useSession } from '../../lib/client/session.tsx'
 import { short, stamp } from '../../lib/client/format.ts'
+import { nowMs } from '../../lib/client/useNow.ts'
 import { Button, Field, Hash, Ident, PageHeader, Select, SkeletonPage, TextInput, cx } from '../../components/ui/primitives.tsx'
 import { ErrorState, Notice } from '../../components/ui/feedback.tsx'
 import { Badge } from '../../components/ui/status.tsx'
@@ -161,7 +162,7 @@ export function Ledger() {
     try {
       const fresh = await q.refetch()
       const result = await verifyChain(fresh.data?.entries ?? entries, webCryptoSha256)
-      setBrowser({ result, at: new Date().toISOString() })
+      setBrowser({ result, at: new Date(nowMs()).toISOString() })
     } finally {
       setBrowserBusy(false)
     }
@@ -318,7 +319,7 @@ export function Ledger() {
           </div>
           {sim && (
             <div className="mt-6">
-              <ResultPanel result={sim.result} at={new Date().toISOString()} label="Simulated verification" simulation={sim.target} />
+              <ResultPanel result={sim.result} at={new Date(nowMs()).toISOString()} label="Simulated verification" simulation={sim.target} />
               <Notice tone="neutral" className="mt-4">
                 The chain view below marks the broken entry. Run "Verify ledger" at the top to confirm the stored ledger is still intact.
               </Notice>

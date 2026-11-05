@@ -6,9 +6,14 @@ import { defineConfig } from 'vite'
  * to the API server on :8787, so the browser sees one origin and the session
  * cookie stays SameSite=Strict. In production the API server serves dist/
  * itself, with the Content-Security-Policy from server/security.ts.
+ *
+ * `vite build --mode pages` (npm run build:pages) is the static, read-only
+ * demo for GitHub Pages: served under /NEXUS/, with .env.pages switching the
+ * client to the recorded snapshot instead of the API (lib/client/mode.ts).
  */
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
+  base: mode === 'pages' ? '/NEXUS/' : '/',
   server: {
     port: 5173,
     strictPort: true,
@@ -31,4 +36,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))
